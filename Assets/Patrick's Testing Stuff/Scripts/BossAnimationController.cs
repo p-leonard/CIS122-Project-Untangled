@@ -1,13 +1,17 @@
+// Written By Patrick Leonard
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
+# nullable enable
+
 public class BossAnimationController : MonoBehaviour
 {
     [Header("Idle Settings")]
-    public float SpinSpeed = 1;
+    public float IdleSpinSpeed = 1;
     public float bobFrequency = 4;
     public float bobAmplitude = 5;
     public float snapbackSpeed = 1;
@@ -16,6 +20,10 @@ public class BossAnimationController : MonoBehaviour
     [Header("Target Tracking Setting")]
     public Transform PlayerTarget;
     public float snapSpeed = 1;
+
+    [Header("Constant Spin Setting")]
+    public float constantSpinSpeed = 1;
+    public float spinSmoothSpeed = 5f;
 
     [Header("Debugging")]
     [SerializeField]
@@ -26,6 +34,7 @@ public class BossAnimationController : MonoBehaviour
     private Dictionary<AnimationState, Action> animationModes;
     private Vector3 origin_pos;
     private Quaternion origin_rot;
+    private float? targetYaw;
 
     // What animation states can we ask this to do?
     public enum AnimationState
@@ -33,6 +42,7 @@ public class BossAnimationController : MonoBehaviour
         None,
         Idle,
         TowardsPlayer,
+        ConstantSpin,
         ResetAnimation
     }
 
@@ -67,7 +77,7 @@ public class BossAnimationController : MonoBehaviour
         transform.eulerAngles = new Vector3(newX, currentRot.y, currentRot.z);
 
         // Apply a neat little spin effect.
-        transform.Rotate(new Vector3(0, 0, 1 * SpinSpeed * Time.deltaTime));
+        transform.Rotate(new Vector3(0, 0, 1 * IdleSpinSpeed * Time.deltaTime));
 
         // How far up or down should we move?
         float updatedYPos = transform.position.y + Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
@@ -84,6 +94,30 @@ public class BossAnimationController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime * snapSpeed);
     }
 
+    private void ConstantSpin()
+    {
+        // If our target yaw is null, grab our current yaw. Otherwise, just use the target yaw.
+        float localTargetYaw = targetYaw ?? transform.rotation.eulerAngles.y;
+
+        // Reset our position
+        transform.position = origin_pos;
+
+        // Move our desired yaw forward.
+        targetYaw = Mathf.Repeat(localTargetYaw + constantSpinSpeed * Time.deltaTime, 360f);
+
+        // Save a copy of our current rotation.
+        Vector3 baseEuler = transform.rotation.eulerAngles;
+
+
+        // Calculate what our actual yaw is going to be.
+        float smoothYaw = Mathf.LerpAngle(baseEuler.y, localTargetYaw, Time.deltaTime * spinSmoothSpeed);
+        float smoothPitch = Mathf.LerpAngle(baseEuler.x, 0f, Time.deltaTime);
+        float smoothRoll = Mathf.LerpAngle(baseEuler.z, 0f, Time.deltaTime);
+
+        // Save a copy of our current rotation and apply our new yaw.
+        transform.rotation = Quaternion.Euler(smoothPitch, smoothYaw, smoothRoll);
+    }
+
     void Start()
     {
         origin_pos = transform.position;
@@ -94,13 +128,15 @@ public class BossAnimationController : MonoBehaviour
             {AnimationState.None, None },
             {AnimationState.Idle, Idle },
             {AnimationState.TowardsPlayer, TowardsPlayer },
-            {AnimationState.ResetAnimation, ResetAnimation }
+            {AnimationState.ResetAnimation, ResetAnimation },
+            {AnimationState.ConstantSpin, ConstantSpin}
         };
     }
 
     void Update()
     {
         if (DEBUG_STOP) return;
+        if (currentState != AnimationState.ConstantSpin) targetYaw = null;
         animationModes[currentState].Invoke();
     }
 }

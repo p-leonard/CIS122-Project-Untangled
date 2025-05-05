@@ -3257,7 +3257,7 @@ MonoBehaviour:
   attribute: size
   Composition: 0
   Source: 0
-  Random: 1
+  Random: 2
   channels: 6
 --- !u!114 &8926484042661614661
 MonoBehaviour:

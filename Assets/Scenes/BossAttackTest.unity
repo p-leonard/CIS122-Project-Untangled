@@ -477,6 +477,10 @@ PrefabInstance:
       propertyPath: currentState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 9036104375516662154, guid: 54bdbe8133239c74a98c8b0fd2a8be47, type: 3}
+      propertyPath: IdleSpinSpeed
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3220260531129065851, guid: 54bdbe8133239c74a98c8b0fd2a8be47, type: 3}
     m_RemovedGameObjects: []
