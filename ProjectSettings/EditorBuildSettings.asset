@@ -6,11 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 076a67f973df4c2429c03ddb99616744
+  - enabled: 1
     path: Assets/Scenes/BossAttackTest.unity
     guid: ea968c69a8e896c4b822756919e14458
   - enabled: 1
     path: Assets/Scenes/SpawnTest.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/DeathScreen.unity
+    guid: 6598bbd39c76b174aa355826801a9a40
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: 2d4931a10834b21468da0deb2ae96ea2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

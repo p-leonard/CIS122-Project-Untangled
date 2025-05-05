@@ -18,7 +18,7 @@ public class BossAnimationController : MonoBehaviour
     
 
     [Header("Target Tracking Setting")]
-    public Transform PlayerTarget;
+    public Transform? PlayerTarget = null;
     public float snapSpeed = 1;
 
     [Header("Constant Spin Setting")]
@@ -31,7 +31,7 @@ public class BossAnimationController : MonoBehaviour
     [SerializeField]
     private AnimationState currentState;
 
-    private Dictionary<AnimationState, Action> animationModes;
+    private Dictionary<AnimationState, Action> animationModes = new();
     private Vector3 origin_pos;
     private Quaternion origin_rot;
     private float? targetYaw;
@@ -89,8 +89,9 @@ public class BossAnimationController : MonoBehaviour
 
     private void TowardsPlayer()
     {
+        if (PlayerTarget == null) Debug.LogError("NULL!");
         // Magic. Pure magic. I have no idea.
-        Quaternion lookOnLook = Quaternion.LookRotation(PlayerTarget.position - transform.position);
+        Quaternion lookOnLook = Quaternion.LookRotation(PlayerTarget!.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime * snapSpeed);
     }
 
@@ -120,6 +121,8 @@ public class BossAnimationController : MonoBehaviour
 
     void Start()
     {
+        if (PlayerTarget == null) Debug.LogError("NULL!");
+
         origin_pos = transform.position;
         origin_rot = transform.rotation;
 
