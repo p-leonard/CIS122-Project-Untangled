@@ -35,6 +35,8 @@ public class BossAnimationController : MonoBehaviour
     private Vector3 origin_pos;
     private Quaternion origin_rot;
     private float? targetYaw;
+    private float animationStartTime = -1f;
+    private LinkedList<AnimationState> states = new(new[] { AnimationState.Idle, AnimationState.TowardsPlayer, AnimationState.ConstantSpin });
 
     // What animation states can we ask this to do?
     public enum AnimationState
@@ -45,6 +47,13 @@ public class BossAnimationController : MonoBehaviour
         ConstantSpin,
         ResetAnimation
     }
+
+    //// Lets define animation states with times for defining a animation loop.
+    //public struct AnimationKeyframe
+    //{
+    //    float duration;
+    //    AnimationState state;
+    //}
 
     public void SetAnimationState(AnimationState newState)
     {
@@ -119,9 +128,18 @@ public class BossAnimationController : MonoBehaviour
         transform.rotation = Quaternion.Euler(smoothPitch, smoothYaw, smoothRoll);
     }
 
+    private void NextState()
+    {
+        var node = states.Find(currentState);
+        var nextNode = node.Next ?? states.First;
+        currentState = nextNode.Value;
+    }
+
     void Start()
     {
         if (PlayerTarget == null) Debug.LogError("NULL!");
+
+        animationStartTime = Time.time;
 
         origin_pos = transform.position;
         origin_rot = transform.rotation;

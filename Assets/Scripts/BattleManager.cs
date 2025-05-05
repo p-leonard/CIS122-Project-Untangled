@@ -7,7 +7,7 @@ public class BattleManager : MonoBehaviour
 {
     [Header("Player")]
     public GameObject player;
-    public MonoBehaviour playerControllerScript;
+    private MonoBehaviour playerControllerScript;
     private HealthSystem playerHealth;
 
     [Header("Boss")]
@@ -55,9 +55,9 @@ public class BattleManager : MonoBehaviour
 
         OnPlayerLose?.Invoke();
 
-//#warning The Battle Manager shouldn't tell the animators what to do, let them subscribe to the event and handle it themselves!
+#warning The Battle Manager shouldn't tell the animators what to do, let them subscribe to the event and handle it themselves!
         //bossAnimator?.SetAnimationState(BossAnimationController.AnimationState.Idle);
-//#warning Same with the player controls!
+#warning Same with the player controls!
         //DisablePlayerControls();
     }
 
@@ -70,12 +70,12 @@ public class BattleManager : MonoBehaviour
 
         OnPlayerWin?.Invoke();
 
-//#warning The Battle Manager shouldn't tell the animators what to do, let them subscribe to the event and handle it themselves!
+#warning The Battle Manager shouldn't tell the animators what to do, let them subscribe to the event and handle it themselves!
         bossAnimator?.SetAnimationState(BossAnimationController.AnimationState.Idle);
     }
 
 
-//#warning I think that we should reload the scene if we want to reset the battle. As it stands, we really don't need a reset function.
+#warning I think that we should reload the scene if we want to reset the battle. As it stands, we really don't need a reset function.
 // If you think otherwise, though, I'd love to hear it.
 
     //    public void ResetBattle()
@@ -84,17 +84,11 @@ public class BattleManager : MonoBehaviour
     //        battleEnded = false;
 
 
-//#warning Because Unity wants to handle the disposal of gameObjects, we need to avoid using null coalessing operators or we'll cause some WEIRD errors.
+#warning Because Unity wants to handle the disposal of gameObjects, we need to avoid using null coalessing operators or we'll cause some WEIRD errors.
     //        //They're fine for regular C# events though, as Unity doesn't really control them. That's why OnPlayerWin?.Invoke() is OK!
 
     //        //bossAnimator?.SetAnimationState(BossAnimationController.AnimationState.ResetAnimation);
     //        //playerHealth?.SetHealth(playerHealth.MaxHealth);
     //        //bossHealth?.SetHealth(bossHealth.MaxHealth);
     //    }
-
-    private void DisablePlayerControls()
-    {
-        if (playerControllerScript != null)
-            playerControllerScript.enabled = false;
-    }
 }

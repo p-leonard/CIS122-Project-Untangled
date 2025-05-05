@@ -1,13 +1,18 @@
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    [Tooltip("Should this controller disable movement when the BattleManager fires a PlayerWin/PlayerLose Event?")]
+    public bool disableOnBattleEnd = true;
+
     public float moveSpeed = 5f;
     public float jumpHeight = 2f;
     public float gravity = -9.81f;
 
+    private BattleManager bm;
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector3 velocity;
@@ -16,8 +21,16 @@ public class PlayerController : MonoBehaviour
 
     private PlayerControls controls;
 
-    void Awake()
+    void Start()
     {
+        GameObject.Find("BattleManager").TryGetComponent<BattleManager>(out bm);
+
+        if (disableOnBattleEnd)
+        {
+            bm.OnPlayerLose += controls.Disable;
+            bm.OnPlayerWin += controls.Disable;
+        }
+
         controller = GetComponent<CharacterController>();
         controls = new PlayerControls();
 
