@@ -94,7 +94,7 @@ namespace HealthComponents
             OnHealthChanged?.Invoke(old_amount, new_amount);
         }
     }
-
+#if UNITY_EDITOR
     [CustomEditor(typeof(HealthSystem))]
     public class MyComponentEditor : Editor
     {
@@ -109,4 +109,5 @@ namespace HealthComponents
             EditorGUILayout.LabelField("Current Health", comp.CurrentHealth.ToString());
         }
     }
+#endif
 }
