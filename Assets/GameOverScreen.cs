@@ -17,12 +17,12 @@ public class GameOverScreen : MonoBehaviour
     // Update is called once per frame
     public void RestartButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneLoader.LoadGameplayScene();
         
     }
 
     public void ExitButton()
     {
-        SceneManager.LoadScene("Menu");
+        SceneLoader.LoadMainMenu();
     }
 }

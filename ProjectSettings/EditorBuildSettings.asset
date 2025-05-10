@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 076a67f973df4c2429c03ddb99616744
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BossAttackTest.unity
     guid: ea968c69a8e896c4b822756919e14458
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SpawnTest.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinScreen.unity
     guid: 2d4931a10834b21468da0deb2ae96ea2
+  - enabled: 1
+    path: Assets/Scenes/GameplayScene.unity
+    guid: da895cdee6d674e4e98a38712aebfe63
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

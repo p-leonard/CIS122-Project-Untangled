@@ -59,6 +59,10 @@ public class BattleManager : MonoBehaviour
         //bossAnimator?.SetAnimationState(BossAnimationController.AnimationState.Idle);
 #warning Same with the player controls!
         //DisablePlayerControls();
+
+        Cursor.lockState = CursorLockMode.None;
+
+        SceneLoader.LoadGameOverScene();
     }
 
     private void HandleBossDeath()
@@ -70,8 +74,12 @@ public class BattleManager : MonoBehaviour
 
         OnPlayerWin?.Invoke();
 
+        Cursor.lockState = CursorLockMode.None;
+
 #warning The Battle Manager shouldn't tell the animators what to do, let them subscribe to the event and handle it themselves!
         //bossAnimator?.SetAnimationState(BossAnimationController.AnimationState.Idle);
+
+        SceneLoader.LoadWinScene();
     }
 
 
