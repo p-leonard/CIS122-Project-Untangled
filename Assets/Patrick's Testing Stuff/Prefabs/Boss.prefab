@@ -370,14 +370,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0641bd4f5d8cc4ea8b70362fc1ef8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpinSpeed: 45
+  IdleSpinSpeed: 50
   bobFrequency: 7
   bobAmplitude: 0.02
   snapbackSpeed: 1
   PlayerTarget: {fileID: 0}
   snapSpeed: 1
+  constantSpinSpeed: 1
+  spinSmoothSpeed: 5
   DEBUG_STOP: 0
-  currentState: 1
+  currentState: 2
 --- !u!114 &1331249623522590562
 MonoBehaviour:
   m_ObjectHideFlags: 0

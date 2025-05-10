@@ -71,7 +71,7 @@ public class BattleManager : MonoBehaviour
         OnPlayerWin?.Invoke();
 
 #warning The Battle Manager shouldn't tell the animators what to do, let them subscribe to the event and handle it themselves!
-        bossAnimator?.SetAnimationState(BossAnimationController.AnimationState.Idle);
+        //bossAnimator?.SetAnimationState(BossAnimationController.AnimationState.Idle);
     }
 
 

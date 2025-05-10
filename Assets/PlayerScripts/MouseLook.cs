@@ -16,6 +16,9 @@ public class MouseLook : MonoBehaviour
     void Awake()
     {
         controls = new PlayerControls();
+
+        Debug.Assert(controls != null);
+
         controls.Player.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
         controls.Player.Look.canceled += ctx => lookInput = Vector2.zero;
         Cursor.lockState = CursorLockMode.Locked;
